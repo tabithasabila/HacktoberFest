@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+    --ink: #18251f;
+    --muted: #69766f;
+    --paper: #f5f7f2;
+    --surface: #ffffff;
+    --line: #dfe6dc;
+    --leaf: #c9ed68;
+    --coral: #e98163;
+}
+
+.stApp {
+    --text-color: var(--ink);
+    --background-color: var(--paper);
+    --secondary-background-color: var(--surface);
+    color: var(--ink);
+    color-scheme: light;
+    background-color: var(--paper);
+    background-image: linear-gradient(rgba(24, 37, 31, .025) 1px, transparent 1px);
+    background-size: 100% 32px;
+}
+
+[data-testid="stHeader"] { background: transparent; }
+[data-testid="stMainBlockContainer"] {
+    max-width: 1120px;
+    padding: 2.5rem 2rem 4rem;
+}
+
+html, body, .stApp { font-family: 'DM Sans', sans-serif; }
+.stApp input, .stApp textarea, .stApp button, .stApp label {
+    font-family: 'DM Sans', sans-serif;
+}
+.stApp [data-testid="stWidgetLabel"] p,
+.stApp label,
+.stApp input,
+.stApp textarea {
+    color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink);
+}
+h1, h2, h3 { color: var(--ink); font-family: 'Space Grotesk', sans-serif; letter-spacing: 0; }
+h1 { font-size: 2.25rem; line-height: 1.05; margin: 0; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.2rem; }
+
+.spendiq-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 1.25rem;
+    padding: 1.35rem 1.5rem;
+    color: #ffffff;
+    background: var(--ink);
+    border-left: 6px solid var(--leaf);
+    border-radius: 8px;
+}
+.spendiq-brand { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; }
+.spendiq-wordmark { display: flex; align-items: center; gap: 1rem; flex-wrap: nowrap; }
+.spendiq-wordmark h1 { white-space: nowrap; }
+.spendiq-monogram {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    color: var(--ink);
+    background: var(--leaf);
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+.spendiq-header h1 { color: #ffffff; }
+.spendiq-eyebrow {
+    margin: 0 0 .2rem;
+    color: #c9ed68;
+    font-size: .7rem;
+    font-weight: 700;
+}
+.spendiq-date { color: #d4ded7; font-size: .85rem; }
+[data-testid="stCaptionContainer"] p {
+    color: var(--muted);
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+
+[data-testid="stMetric"] {
+    min-height: 96px;
+    padding: .9rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--leaf);
+    border-radius: 8px;
+}
+[data-testid="stMetricLabel"] p { color: var(--muted); font-size: .82rem; }
+[data-testid="stMetricValue"] {
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.65rem;
+}
+
+[data-testid="stNumberInput"] input,
+[data-testid="stTextInput"] input,
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+    background: var(--surface);
+    border-color: var(--line);
+    border-radius: 6px;
+}
+
+.stButton > button, [data-testid="stFormSubmitButton"] button {
+    min-height: 2.7rem;
+    border: 1px solid var(--ink);
+    border-radius: 6px;
+    color: var(--paper);
+    background: var(--ink);
+    font-weight: 700;
+    transition: background-color .15s ease, transform .15s ease;
+}
+.stButton > button:hover,
+[data-testid="stFormSubmitButton"] button:hover {
+    border-color: #344b3d;
+    color: white;
+    background: #344b3d;
+    transform: translateY(-1px);
+}
+.stDownloadButton > button {
+    min-height: 2.7rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--ink);
+    background: #ffffff;
+    font-weight: 700;
+}
+.stDownloadButton > button:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+    background: #eef2e9;
+}
+
+[data-testid="stForm"], [data-testid="stFileUploader"] section {
+    border-color: var(--line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .78);
+}
+[data-testid="stAlert"] { border-radius: 6px; }
+
+@media (max-width: 700px) {
+    [data-testid="stMainBlockContainer"] { padding: 1.5rem 1rem 3rem; }
+    .spendiq-header .spendiq-wordmark h1 { font-size: 1.9rem; }
+    .spendiq-header { flex-direction: column; align-items: flex-start; padding: 1rem; }
+    .spendiq-date { max-width: none; text-align: left; }
+}

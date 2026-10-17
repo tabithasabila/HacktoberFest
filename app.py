@@ -27,98 +27,25 @@ def show_model_error(action, error):
     else:
         st.error(f"{action} failed: {error}")
 
-st.title("SpendIQ")
-st.caption("PERSONAL FINANCE  /  UGX")
+style_path = Path(__file__).with_name("style.css")
+# Load presentation separately so UI changes don't clutter the app logic.
+st.markdown(
+    f"<style>{style_path.read_text(encoding='utf-8')}</style>",
+    unsafe_allow_html=True,
+)
 
 st.markdown(
-    """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-
-    :root {
-        --ink: #18251f;
-        --muted: #69766f;
-        --paper: #f5f7f2;
-        --surface: #ffffff;
-        --line: #dfe6dc;
-        --leaf: #c9ed68;
-        --coral: #e98163;
-    }
-
-    .stApp {
-        color: var(--ink);
-        background-color: var(--paper);
-        background-image: linear-gradient(rgba(24, 37, 31, .025) 1px, transparent 1px);
-        background-size: 100% 32px;
-    }
-
-    [data-testid="stHeader"] { background: transparent; }
-    [data-testid="stMainBlockContainer"] {
-        max-width: 1120px;
-        padding: 2.5rem 2rem 4rem;
-    }
-
-    html, body, .stApp { font-family: 'DM Sans', sans-serif; }
-    .stApp input, .stApp textarea, .stApp button, .stApp label {
-        font-family: 'DM Sans', sans-serif;
-    }
-    h1, h2, h3 { color: var(--ink); font-family: 'Space Grotesk', sans-serif; letter-spacing: 0; }
-    h1 { font-size: 2.7rem; line-height: 1.05; margin: .2rem 0 .4rem; }
-    h2 { font-size: 1.45rem; }
-    [data-testid="stCaptionContainer"] p {
-        color: var(--muted);
-        font-size: .76rem;
-        font-weight: 700;
-        letter-spacing: .08em;
-    }
-
-    [data-testid="stMetric"] {
-        min-height: 112px;
-        padding: 1.15rem 1.25rem;
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: 8px;
-    }
-    [data-testid="stMetricLabel"] p { color: var(--muted); font-size: .82rem; }
-    [data-testid="stMetricValue"] { color: var(--ink); font-family: 'Space Grotesk', sans-serif; }
-
-    [data-testid="stNumberInput"] input,
-    [data-testid="stTextInput"] input,
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-        background: var(--surface);
-        border-color: var(--line);
-        border-radius: 6px;
-    }
-
-    .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] button {
-        min-height: 2.7rem;
-        border: 1px solid var(--ink);
-        border-radius: 6px;
-        color: var(--paper);
-        background: var(--ink);
-        font-weight: 700;
-        transition: background-color .15s ease, transform .15s ease;
-    }
-    .stButton > button:hover, .stDownloadButton > button:hover,
-    [data-testid="stFormSubmitButton"] button:hover {
-        border-color: #344b3d;
-        color: white;
-        background: #344b3d;
-        transform: translateY(-1px);
-    }
-
-    [data-testid="stForm"], [data-testid="stFileUploader"] section {
-        border-color: var(--line);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, .78);
-    }
-    [data-testid="stAlert"] { border-radius: 6px; }
-
-    @media (max-width: 700px) {
-        [data-testid="stMainBlockContainer"] { padding: 1.5rem 1rem 3rem; }
-        h1 { font-size: 2.15rem; }
-    }
-    </style>
+    f"""
+    <div class="spendiq-header">
+        <div class="spendiq-brand">
+            <p class="spendiq-eyebrow">PERSONAL FINANCE</p>
+            <div class="spendiq-wordmark">
+                <div class="spendiq-monogram">S</div>
+                <h1>SpendIQ</h1>
+            </div>
+        </div>
+        <div class="spendiq-date">{date.today().strftime("%A, %d %B %Y")}</div>
+    </div>
     """,
     unsafe_allow_html=True,
 )
@@ -133,6 +60,7 @@ default_expenses = pd.DataFrame(
     }
 )
 
+# Seed default categories only when no CSV data exists yet.
 if not csv_path.exists() or csv_path.stat().st_size == 0:
     default_expenses.to_csv(csv_path, index=False)
 
@@ -147,10 +75,17 @@ if not required_columns.issubset(df.columns):
     st.error("expenses.csv must have 'Category' and 'Amount' columns.")
     st.stop()
 
-df["Amount"] = pd.to_numeric(df["Amount"], errors="coerce")
-if df["Amount"].isna().any():
+# A header-only CSV has no categories to build inputs from.
+if df.empty:
+    df = default_expenses.copy()
+
+# Treat blank amounts as zero, but reject nonblank values that aren't numeric.
+blank_amounts = df["Amount"].isna() | df["Amount"].astype(str).str.strip().eq("")
+numeric_amounts = pd.to_numeric(df["Amount"], errors="coerce")
+if (numeric_amounts.isna() & ~blank_amounts).any():
     st.error("Every row in expenses.csv must have a numeric Amount.")
     st.stop()
+df["Amount"] = numeric_amounts.fillna(0)
 if df["Amount"].mod(1).ne(0).any():
     st.error("UGX amounts in expenses.csv must be whole numbers.")
     st.stop()
@@ -161,6 +96,7 @@ if df["Category"].eq("").any():
     st.error("Every row in expenses.csv must have a category.")
     st.stop()
 
+# Older CSVs gain a Date column; their original dates remain unknown.
 if "Date" not in df.columns:
     df["Date"] = ""
 df["Date"] = df["Date"].fillna("").astype(str)
@@ -191,6 +127,7 @@ def save_expense_entries():
         st.session_state["expense_save_error"] = "Enter an amount greater than zero before saving."
         return
 
+    # Append saved entries, then clear input state without clearing the CSV.
     updated_df = pd.concat([current_df, pd.DataFrame(new_rows)], ignore_index=True)
     updated_df.to_csv(csv_path, index=False)
     st.session_state["entry_allowance"] = 0
@@ -221,6 +158,7 @@ def save_receipt_items(receipt_rows):
         st.session_state["receipt_save_error"] = "Receipt items must use an expense category, not Allowance."
         return
 
+    # Match extracted categories case-insensitively while preserving CSV spelling.
     current_df = pd.read_csv(csv_path)
     category_names = {category.casefold(): category for category in current_df["Category"]}
     receipt_rows["Category"] = receipt_rows["Category"].map(
@@ -278,7 +216,7 @@ expense_categories = [
     category for category in df["Category"].unique() if category.casefold() != "allowance"
 ]
 
-st.subheader("New entry")
+st.subheader("Log your expenditure for the selected day")
 with st.container(border=True):
     date_column, allowance_column = st.columns(2)
     with date_column:
@@ -349,6 +287,7 @@ if uploaded_receipt and st.button("Extract receipt items"):
             model="gemma-4-26b-a4b-it",
             contents=[prompt, receipt_part],
         )
+        # Models may wrap otherwise-valid JSON in a Markdown code fence.
         response_text = (response.text or "").strip()
         if response_text.startswith("```"):
             response_text = response_text.split("\n", 1)[-1].removesuffix("```").strip()
@@ -397,6 +336,7 @@ if st.session_state.pop("receipt_save_success", False):
     st.success("Receipt amounts added to their categories in expenses.csv.")
 
 selected_month = pd.Period(entry_date, freq="M")
+# Undated legacy rows stay in the CSV but cannot be assigned to a monthly total.
 row_months = pd.to_datetime(df["Date"], errors="coerce").dt.to_period("M")
 month_df = df.loc[row_months == selected_month]
 saved_allowance_values = month_df.loc[
@@ -420,7 +360,7 @@ expenses_metric.metric("Spent", f"UGX {total_expenses:,.0f}")
 balance_metric.metric("Remaining", f"UGX {balance:,.0f}")
 savings_metric.metric("Savings goal", f"UGX {goal:,.0f}")
 if df["Date"].eq("").any():
-    st.caption("Rows with no date are excluded from monthly totals.")
+    st.caption("Older rows without a recorded date remain in the CSV but aren't included in monthly totals.")
 
 st.subheader("Monthly insight")
 if st.button("Analyze my month", type="primary"):
