@@ -223,7 +223,11 @@ with st.container(border=True):
         entry_date = st.date_input("Entry date", value=date.today(), key="entry_date")
     with allowance_column:
         allowance_entry = st.number_input(
-            "Allowance received (UGX)", min_value=0, value=0, step=1, key="entry_allowance"
+            "Allowance received on this date (UGX)",
+            min_value=0,
+            value=0,
+            step=1,
+            key="entry_allowance",
         )
 
 category_values = {}
@@ -287,7 +291,7 @@ if uploaded_receipt and st.button("Extract receipt items"):
             model="gemma-4-26b-a4b-it",
             contents=[prompt, receipt_part],
         )
-        # Models may wrap otherwise-valid JSON in a Markdown code fence.
+        
         response_text = (response.text or "").strip()
         if response_text.startswith("```"):
             response_text = response_text.split("\n", 1)[-1].removesuffix("```").strip()
@@ -355,7 +359,7 @@ expense_summary = "\n".join(
 )
 st.subheader(entry_date.strftime("%B %Y"))
 allowance_metric, expenses_metric, balance_metric, savings_metric = st.columns(4)
-allowance_metric.metric("Allowance", f"UGX {allowance:,.0f}")
+allowance_metric.metric("Allowance this month", f"UGX {allowance:,.0f}")
 expenses_metric.metric("Spent", f"UGX {total_expenses:,.0f}")
 balance_metric.metric("Remaining", f"UGX {balance:,.0f}")
 savings_metric.metric("Savings goal", f"UGX {goal:,.0f}")
