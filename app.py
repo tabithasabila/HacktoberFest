@@ -362,7 +362,7 @@ allowance_metric, expenses_metric, balance_metric, savings_metric = st.columns(4
 allowance_metric.metric("Allowance this month", f"UGX {allowance:,.0f}")
 expenses_metric.metric("Spent", f"UGX {total_expenses:,.0f}")
 balance_metric.metric("Remaining", f"UGX {balance:,.0f}")
-savings_metric.metric("Savings goal", f"UGX {goal:,.0f}")
+savings_metric.metric("Savings goal for the month", f"UGX {goal:,.0f}")
 if df["Date"].eq("").any():
     st.caption("Older rows without a recorded date remain in the CSV but aren't included in monthly totals.")
 
