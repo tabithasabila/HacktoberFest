@@ -1,103 +1,126 @@
-SpendIQ 💰🤖
+# SpendIQ 💰🤖
+### AI-Powered Student Financial Advisor | Powered by Gemma 4
 
-AI-Powered Student Financial Advisor built with Gemma 4
+**SpendIQ** is an AI-powered financial advisor designed to help students understand their spending habits, make informed financial decisions, and achieve their savings goals.
 
-SpendIQ helps students understand their spending habits, make informed financial decisions, and achieve their savings goals through AI-powered financial coaching.
+🌐 **Live Demo:** [spend-ai.onrender.com](https://spend-ai.onrender.com/)
 
-Instead of simply tracking expenses, SpendIQ uses Gemma 4 to analyze spending patterns, identify financial risks, generate personalized budgeting recommendations, and provide actionable savings advice tailored to each user.
+Unlike traditional expense trackers that primarily display numbers and charts, SpendIQ uses **Gemma 4** to analyze spending patterns, identify potential financial risks, generate personalized budgeting recommendations, and provide actionable savings advice tailored to each user's financial situation.
 
-🚀 The Problem
+## 🚀 The Problem
 
-Many students receive a fixed monthly allowance but struggle to:
+Many students rely on a fixed monthly allowance but struggle to manage their finances effectively. Common challenges include:
 
-Track where their money goes
-Maintain a realistic budget
-Build savings habits
-Make informed financial decisions
-Understand the financial impact of their spending patterns
+- Tracking where their money goes.
+- Creating and maintaining a realistic budget.
+- Developing consistent savings habits.
+- Making informed spending decisions.
+- Understanding the financial impact of their spending patterns.
 
-Traditional expense trackers provide numbers and charts, but they rarely explain what those numbers mean.
+Traditional expense trackers help users record transactions, but often fall short of explaining what those numbers mean or how users can improve their financial habits.
 
-💡 Our Solution
+## 💡 Our Solution
 
-SpendIQ combines expense tracking with the reasoning capabilities of Gemma 4 to deliver intelligent financial guidance.
+SpendIQ combines expense tracking with the reasoning capabilities of **Gemma 4** to transform financial data into practical, personalized guidance.
 
-Users can:
+With SpendIQ, users can:
 
-Record monthly expenses
-Analyze spending patterns
-Receive personalized budget recommendations
-Identify areas of overspending
-Get tailored savings advice
-Ask financial questions through an AI-powered advisor
-Upload receipts for automatic expense extraction and categorization
-✨ Features
-📊 Expense Tracking
+- 📝 Record and categorize monthly expenses.
+- 📊 Analyze spending patterns and identify overspending.
+- 🧠 Receive AI-generated budget recommendations and financial insights.
+- 🎯 Set savings goals and explore strategies to achieve them.
+- 💬 Ask financial questions and receive personalized guidance.
+- 🧾 Upload receipt images for automatic expense extraction and categorization.
 
-Monitor spending across categories such as:
+## ✨ Key Features
 
-Food
-Transportation
-Internet/Data
-Entertainment
-Additional custom categories
-🧠 AI Financial Analysis
+### 📊 1. Expense Tracking
 
-Powered by Gemma 4, SpendIQ provides:
+Record and organize expenses across categories such as:
 
-Spending breakdowns
-Financial risk assessments
-Budget recommendations
-Personalized financial insights
-🎯 Savings Planning
+- 🍔 Food
+- 🚌 Transportation
+- 📱 Internet and Data
+- 🎮 Entertainment
+- 🗂️ Custom expense categories
 
-Set savings goals and receive practical guidance on how to achieve them.
+This helps users understand how their money is distributed across different spending categories.
 
-💬 AI Financial Coach
+### 🧠 2. AI-Powered Financial Analysis
 
-Ask natural-language questions such as:
+Using Gemma 4, SpendIQ analyzes users' financial information to provide:
 
--Why do I run out of money before the end of the month?
+- Spending breakdowns and pattern analysis.
+- Potential financial risk identification.
+- Personalized budgeting recommendations.
+- Insights into spending habits.
+- Practical suggestions for improving money management.
 
--Can I afford to save for a laptop?
+### 🎯 3. Savings Planning
 
--Which expenses should I reduce first?
+Set savings goals and receive actionable guidance on how to work toward them. SpendIQ helps users explore potential spending adjustments and develop more intentional saving habits.
 
-🧾 Receipt Analysis (Multimodal)
+### 💬 4. AI Financial Coach
 
-Upload receipt images and let Gemma 4:
+Interact with an AI-powered financial advisor using natural-language questions, such as:
 
-Extract purchases
-Categorize expenses
-Include them in spending analysis
-🧠 How Gemma 4 Powers SpendIQ
+- *Why do I run out of money before the end of the month?*
+- *Can I afford to save for a laptop?*
+- *Which expenses should I reduce first?*
 
-Gemma 4 serves as the core intelligence of the application.
+SpendIQ uses the available financial context to help users understand their situation and consider practical next steps.
 
-Rather than functioning as a simple chatbot, it:
+### 🧾 5. Multimodal Receipt Analysis
 
-Understands financial data
-Analyzes spending behavior
-Identifies budget risks
-Recommends spending adjustments
-Generates savings strategies
-Processes uploaded receipt images
-Answers finance-related questions in natural language
+Upload receipt images and use Gemma 4's image-understanding capabilities to help:
 
-🏗️ Tech Stack
-Frontend
-Streamlit
+- Extract purchase information.
+- Identify and categorize expenses.
+- Incorporate extracted expenses into spending analysis.
 
-Backend
-Python
+This feature reduces the need to enter every receipt detail manually.
 
-AI
-Gemma 4
-Google GenAI SDK
+## 🧠 How Gemma 4 Powers SpendIQ
 
-Data Processing
-Pandas
+Gemma 4 provides the AI capabilities at the core of SpendIQ, helping transform expense records into understandable financial insights.
 
-Environment Management
-Python Virtual Environment
-python-dotenv
+Rather than serving only as a conversational chatbot, the model supports several financial assistance tasks:
+
+| Capability | Purpose |
+|---|---|
+| Financial data analysis | Interpret available expense information and spending patterns. |
+| Budget assessment | Identify potential budget risks and areas of overspending. |
+| Personalized recommendations | Suggest practical adjustments based on available financial context. |
+| Savings guidance | Help users explore strategies for reaching their financial goals. |
+| Natural-language interaction | Answer finance-related questions conversationally. |
+| Receipt understanding | Extract relevant purchase information from supported receipt images. |
+
+By combining structured expense data with AI-generated explanations, SpendIQ aims to make personal financial management more accessible and actionable for students.
+
+## 🏗️ Tech Stack
+
+| Component | Technology | Purpose |
+|---|---|---|
+| Frontend and UI | [Streamlit](https://streamlit.io/) | Interactive web application and user interface. |
+| Backend | Python | Application logic and financial analysis workflows. |
+| AI Model | Gemma 4 | Financial insights, recommendations, and receipt understanding. |
+| AI Integration | [Google GenAI SDK](https://ai.google.dev/gemini-api/docs) | Integration with Google's supported generative AI services. |
+| Data Processing | [Pandas](https://pandas.pydata.org/) | Expense data manipulation and analysis. |
+| Environment Management | Python virtual environment | Dependency isolation. |
+| Configuration | `python-dotenv` | Loading environment variables from a `.env` file during local development. |
+
+## 🌐 Try SpendIQ
+
+Explore the live application:
+
+**[Launch SpendIQ →](https://spend-ai.onrender.com/)**
+
+## 🎯 Vision
+
+SpendIQ aims to help students move beyond simply tracking expenses toward understanding their financial habits, making more informed decisions, and building sustainable saving practices.
+
+By combining accessible financial tools with AI-powered guidance, SpendIQ makes financial awareness more practical for everyday student life.
+
+---
+
+*SpendIQ is an educational financial assistance tool, not a substitute for professional financial advice. AI-generated recommendations may be inaccurate and should be evaluated against the user's actual financial circumstances.*
